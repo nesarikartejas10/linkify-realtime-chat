@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { config } from "./envConfig.js";
 
 const connectDB = async () => {
   try {
@@ -10,9 +11,7 @@ const connectDB = async () => {
       console.log("Error in connecting to database!!!", err.message);
     });
 
-    await mongoose.connect(
-      "mongodb+srv://nesarikartejas10:nesarikartejas10@cluster0.aldeoro.mongodb.net/linkifyX-chat",
-    );
+    await mongoose.connect(config.mongodbURL);
   } catch (error) {
     console.log("Failed to connect database!!!", error);
     process.exit(1);

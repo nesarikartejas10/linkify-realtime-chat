@@ -1,7 +1,8 @@
 import app from "./src/app.js";
 import connectDB from "./src/config/db.js";
+import { config } from "./src/config/envConfig.js";
 
-const PORT = process.env.port || 8000;
+const PORT = config.port;
 
 const startServer = async () => {
   await connectDB();
