@@ -1,5 +1,6 @@
 import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
+import generateToken from "../utils/jwtToken.js";
 
 export const signUp = async (req, res) => {
   try {
@@ -37,8 +38,21 @@ export const signUp = async (req, res) => {
       password: hashedPassword,
     });
 
+    const token = generateToken(newUser._id);
+
+    res.cookie("token", token, {
+      httpOnly: true,
+      maxAge: 2 * 24 * 60 * 60 * 1000,
+      sameSite: "none",
+      secure: false,
+    });
+
     return res
       .status(201)
-      .json({ success: true, message: "User registered successfully." });
-  } catch (error) {}
+      .json({ success: true, message: "User registered successfully.", token });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ success: false, message: "Error in registering user!!!" });
+  }
 };
