@@ -11,7 +11,7 @@ const connectDB = async () => {
       console.log("Error in connecting to database!!!", err.message);
     });
 
-    await mongoose.connect(config.mongodbURL);
+    await mongoose.connect(`${config.mongodbURL}/linkifyX-chat`);
   } catch (error) {
     console.log("Failed to connect database!!!", error);
     process.exit(1);
