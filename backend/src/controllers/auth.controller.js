@@ -104,3 +104,17 @@ export const signIn = async (req, res) => {
     });
   }
 };
+
+export const logOut = (req, res) => {
+  try {
+    res.clearCookie("token");
+    return res
+      .status(200)
+      .json({ success: true, message: "Logout successfully." });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Something went wrong while log out!",
+    });
+  }
+};
