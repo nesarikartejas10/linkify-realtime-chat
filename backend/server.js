@@ -2,7 +2,7 @@ import app from "./src/app.js";
 import connectDB from "./src/config/db.js";
 import { config } from "./src/config/envConfig.js";
 
-const PORT = config.port;
+const PORT = config.port || 8000;
 
 const startServer = async () => {
   await connectDB();
