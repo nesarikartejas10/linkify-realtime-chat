@@ -10,6 +10,8 @@ const SignUp = () => {
   });
 
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const navigate = useNavigate();
 
@@ -20,21 +22,25 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     const { username, email, password } = formData;
     try {
+      setLoading(true);
       const result = await api.post("/auth/signUp", {
         username,
         email,
         password,
       });
 
-      console.log(result.data);
-
+      setFormData({ username: "", email: "", password: "" });
+      setError("");
       if (result.data.success) {
         navigate("/login");
       }
     } catch (error) {
-      console.error("something went wrong", error);
+      setError(error.response?.data?.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -51,6 +57,7 @@ const SignUp = () => {
           onSubmit={handleSubmit}
           className="flex flex-col items-center w-full gap-5 mb-8"
         >
+          {error && <p className="text-red-600 font-medium">{error}</p>}
           <input
             type="text"
             placeholder="Username"
@@ -86,8 +93,9 @@ const SignUp = () => {
           <button
             type="submit"
             className="px-5 py-2.5 rounded-2xl bg-[#33826a] shadow-gray-200 shadow-md text-[19px] w-50 mt-5 text-white font-semibold hover:bg-[#5ba58f] cursor-pointer"
+            disabled={loading}
           >
-            SignUp
+            {loading ? "Loading..." : "Sign Up"}
           </button>
 
           <p className="cursor-pointer" onClick={() => navigate("/login")}>
