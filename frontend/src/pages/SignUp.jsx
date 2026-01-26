@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
+  const [showPassword, setShowPassword] = useState("false");
   const navigate = useNavigate();
   return (
     <div className="flex items-center justify-center w-full h-screen bg-slate-200">
@@ -22,11 +24,19 @@ const SignUp = () => {
             placeholder="Email"
             className="w-[90%] h-12.5 outline-none border border-[#33826a] px-5 py-2.5 bg-white rounded-lg shadow-gray-200 shadow-lg text-gray-700 text-[19px]"
           />
-          <input
-            type="password"
-            placeholder="Password"
-            className="w-[90%] h-12.5 outline-none border border-[#33826a] px-5 py-2.5 bg-white rounded-lg shadow-gray-200 shadow-lg text-gray-700 text-[19px]"
-          />
+          <div className="w-[90%] h-12.5 border border-[#33826a] shadow-gray-200 shadow-lg rounded-lg overflow-hidden relative">
+            <input
+              type={showPassword ? "password" : "text"}
+              placeholder="Password"
+              className="w-full h-full outline-none px-5 py-2.5 bg-white text-gray-700 text-[19px]"
+            />
+            <span
+              className="absolute top-2.5 right-5 text-[16px] text-[#33826a] font-semibold cursor-pointer"
+              onClick={() => setShowPassword((prev) => !prev)}
+            >
+              {showPassword ? "show" : "hide"}
+            </span>
+          </div>
           <button
             type="submit"
             className="px-5 py-2.5 rounded-2xl bg-[#33826a] shadow-gray-200 shadow-md text-[19px] w-50 mt-5 text-white font-semibold hover:bg-[#5ba58f] cursor-pointer"
